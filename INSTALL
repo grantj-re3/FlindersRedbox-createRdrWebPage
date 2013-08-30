@@ -1,0 +1,140 @@
+1. APPLICATION ENVIRONMENT
+
+- ruby 1.8.7 (2011-06-30 patchlevel 352) [x86_64-linux]
+- Apache/2.2.15 (Unix)
+- Red Hat Enterprise Linux Server release 6.3 (Santiago)
+- 2.6.32-279.11.1.el6.x86_64 #1 SMP Sat Sep 22 07:10:26 EDT 2012 x86_64 x86_64 x86_64 GNU/Linux
+
+If you cannot install the above ruby version to your Unix/Linux
+operating system from source or via your normal package management 
+system, consider using Ruby Version Manager at https://rvm.io.
+
+
+2. INSTALLATION
+
+
+2.1 ASSUMPTIONS
+
+ - That you have a basic understanding of Linux/Unix, Ruby.
+ - That you are using a Linux, Unix or Unix-like environment similar to that
+   described under APPLICATION ENVIRONMENT.
+ - That the user who runs this program has permission to write files (static web
+   pages) into the Apache (or other web server) web root directory.
+
+
+123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+2.2 INSTRUCTIONS
+
+ - Download from github
+ - Checkout latest version/tag
+ - Update config for your site
+   * HTML_OUT_FNAME, STYLE_IMAGE_DIRS, FILE_WARN_MB, HTML_TEMPLATE and
+     HTML_ELEMENT_SUBHEADING_EXT in the script createRdrWebPage.rb
+   * create an html template for your Research Data Repository web page
+     (use the sample template initially)
+
+
+3. EXAMPLES
+
+
+3.1 SAMPLE INSTALLATION USING A TEMPLATE WITHOUT EXTERNAL CSS
+
+The purpose of this sample is to:
+ - show some of the important configuration options
+ - use a very simple html template to demonstrate TAG substitution
+ - have little concern regarding the prettiness of resulting web pages
+
+
+Scenario:
+
+ - The filesystem path to your Research Data Repository (RDR) parent web directory is:
+     /var/www/andsdevpub/rdr
+ - This application to be installed in $HOME/opt/createRdrWebPage of an unprivileged user.
+ - The above user has permission to write to /var/www/andsdevpub/rdr
+ - The application will issue a warning if any file within the repository folder is
+   greater than 100 MB.
+
+
+Instructions:
+
+mkdir ~/opt
+git clone https://github.com/grantj-re3/FlindersRedbox-createRdrWebPage.git ~/opt/createRdrWebPage
+cd ~/opt/createRdrWebPage
+
+# If you want a particular version
+git tag # List tagged releases
+git checkout ... # Checkout the desired release
+
+# Read files INSTALL LICENSE README*
+
+# Symlink (or copy or rename) the etc_sample_nocss directory so that the contents
+# appears to be in the etc directory.
+# In addition to configuration and rules files, this directory contains:
+# - a very simple html template
+# - an image/CSS tarball which is empty
+ln -s etc_sample_nocss etc
+
+# Update config for your site
+
+In createRdrWebPage.rb:
+ - confirm HTML_OUT_FNAME has the value: "index.html"
+ - confirm STYLE_IMAGE_DIRS is an empty array ie. []
+ - confirm FILE_WARN_MB has the value: 100
+ - confirm HTML_TEMPLATE has the value:
+     "#{ENV['HOME']}/opt/createRdrWebPage/etc/createRdrWebPage.tpl.html"
+ - confirm HTML_ELEMENT_SUBHEADING_EXT has the value: "<h3>"
+
+# Create a (test) RDR folder within your web server's DocumentRoot
+mkdir /var/www/andsdevpub/rdr/my_research_data
+
+# Copy your research data files into the above folder.
+# Alternatively for test purposes, we will create some empty test-files.
+cd /var/www/andsdevpub/rdr/my_research_data
+touch README spreadsheet2001.csv spreadsheet2002.csv column_descr.txt
+
+# Run the script (while in folder /var/www/andsdevpub/rdr/my_research_data)
+# to create index.html.
+~/opt/createRdrWebPage/bin/createRdrWebPage.rb
+
+# Respond to the prompts as follows (where <Enter> means 'press the Enter key')
+  <Enter>
+  My dataset<Enter>
+  .<Enter>
+
+  This is my dataset description<Enter>
+  .<Enter>
+
+  My readme file<Enter>
+  .<Enter>
+
+  Data for 2001<Enter>
+  .<Enter>
+
+  Data for 2002<Enter>
+  .<Enter>
+
+  Spreadsheet column description<Enter>
+  .<Enter>
+
+# Confirm that index.html was created within current directory my_research_data
+ls -l index.html
+
+# Navigate to the appropriate URL in your browser. Eg. http://MY_WEB_SERVER/rdr/my_research_data/
+
+# Celebrate!
+
+
+3.2 SAMPLE INSTALLATION USING A TEMPLATE WITH EXTERNAL CSS
+
+The purpose of this sample is to:
+ - show the same important configuration options as shown above
+ - use a more complicated html template (but with TAG substitution identical to the above)
+ - pay more attention to creating pretty web pages
+
+Scenario:
+Identical to the above scenario.
+
+Instructions:
+Identical to the above instructions with the following exceptions.
+  ...
+
