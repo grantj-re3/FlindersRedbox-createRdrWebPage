@@ -49,7 +49,7 @@ Features
   other files within the same directory/folder.
 - The app shall be run by the RDR administrator (not by web user or dataset
   owner/manager).
-- It allows web page branding (according to a web defined template).
+- It allows web page branding (via an html-template).
 - It shows file sizes of hyperlinked (downloadable) files.
 - Since the file extension often reflects the file's purpose, hyperlinked
   files are grouped by file extension.
