@@ -22,7 +22,6 @@ system, consider using Ruby Version Manager at https://rvm.io.
    pages) into the Apache (or other web server) web root directory.
 
 
-123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
 2.2 INSTRUCTIONS
 
  - Download from github
@@ -69,9 +68,7 @@ git checkout ... # Checkout the desired release
 
 # Symlink (or copy or rename) the etc_sample_nocss directory so that the contents
 # appears to be in the etc directory.
-# In addition to configuration and rules files, this directory contains:
-# - a very simple html template
-# - an image/CSS tarball which is empty
+# This directory contains a very simple html template (without any CSS/images).
 ln -s etc_sample_nocss etc
 
 # Update config for your site
@@ -124,6 +121,11 @@ ls -l index.html
 # Celebrate!
 
 
+# To understand how the various items of text populate the web page, you can compare:
+# - the source html-template at ~/opt/createRdrWebPage/etc_sample_nocss/createRdrWebPage.tpl.html
+# - the resulting web page at /var/www/andsdevpub/rdr/my_research_data/index.html
+
+
 3.2 SAMPLE INSTALLATION USING A TEMPLATE WITH EXTERNAL CSS
 
 The purpose of this sample is to:
@@ -131,10 +133,33 @@ The purpose of this sample is to:
  - use a more complicated html template (but with TAG substitution identical to the above)
  - pay more attention to creating pretty web pages
 
+
 Scenario:
+
 Identical to the above scenario.
 
+
 Instructions:
-Identical to the above instructions with the following exceptions.
-  ...
+
+These instructions assume you have NOT performed instructions in section 3.1 above.
+These instructions are identical to those above but with the following exceptions.
+
+
+# Symlink (or copy or rename) the etc_sample_css directory so that the contents
+# appears to be in the etc directory.
+# This directory contains:
+# - an html template (obtained from a free CSS zip file)
+# - an image/CSS tarball (of which the contents was obtained from the same zip file)
+cd ~/opt/createRdrWebPage
+ln -s etc_sample_css etc
+
+# Copy the sample_styles to your website at a sibling directory of the
+# folder which will contain your index.html and dataset related files.
+cp -va ~/opt/createRdrWebPage/etc_sample_css/sample_styles /var/www/andsdevpub/rdr
+
+# Update config for your site
+
+In createRdrWebPage.rb:
+ - confirm STYLE_IMAGE_DIRS is the array [ "../sample_styles", ]
+ - confirm other constants are as defined in section 3.1 above
 
