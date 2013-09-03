@@ -66,6 +66,17 @@ KB_SIZE = 1000
 MB_SIZE = KB_SIZE * KB_SIZE
 GB_SIZE = KB_SIZE * KB_SIZE * KB_SIZE
 
+# When this app prompts for file descriptions, it shall ignore filenames
+# given in this list. This is an array of filename strings. Since we
+# invoke the include() method on this array, it does not support strings
+# containing either file wildcards or regular expressions.
+IGNORE_FILE_LIST = [
+  ".",			# Unix: current directory
+  "..",			# Unix: parent directory
+  ".htaccess",		# Apache directory-level configuration file
+  HTML_OUT_FNAME	# The web page being created by this app
+]
+
 ##############################################################################
 # Extend the File built-in class
 class File
@@ -182,7 +193,7 @@ def get_file_descriptions_by_ext_by_fname
   file_descriptions_by_ext_by_fname = {}
   Dir.foreach(".") {|fname|
     next if File.directory?(fname)	# Ignore any subdirectories
-    unless [".", "..", ".htaccess", HTML_OUT_FNAME].include?(fname)
+    unless IGNORE_FILE_LIST.include?(fname)
       ext = File.extname(fname)
       file_descriptions_by_ext_by_fname[ext] = {} unless file_descriptions_by_ext_by_fname[ext]
       file_descriptions_by_ext_by_fname[ext][fname] = ""	# Empty description
@@ -286,7 +297,7 @@ end
 # sort by filename within each grouping.
 def create_html_block_links2files(file_descriptions_by_ext_by_fname)
   html_hdr_open = HTML_ELEMENT_SUBHEADING_EXT
-  html_hdr_close = HTML_ELEMENT_SUBHEADING_EXT.sub(/^(<)(.*)$/, '\1/\2')
+  html_hdr_close = HTML_ELEMENT_SUBHEADING_EXT.sub(/^<([^ >]+).*$/, '</\1>')
 
   strings = []
   file_descriptions_by_ext_by_fname.sort.each{|ext, fnames|
