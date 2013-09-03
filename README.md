@@ -47,15 +47,15 @@ Features
 --------
 - The script is a linux/unix command line application written in ruby.
 - It creates a single web page and allows the user to:
-  * enter a mandatory page title and optional page description
-  * enter an optional description of each file in the current directory
+    * enter a mandatory page title and optional page description
+    * enter an optional description of each file in the current directory
 - Via ruby script configuration, it allows:
-  * The file name of the resulting web page to be configured (eg. index.html)
-  * Use of an html template (eg. with branding/css) to:
-    - display the above page title and page description
-    - display the above file links with file descriptions
-  * for the creation of one or more symbolic links to existing style/image/branding
-    directories
+    * The file name of the resulting web page to be configured (eg. index.html)
+    * Use of an html template (eg. with branding/css) to:
+        - display the above page title and page description
+        - display the above file links with file descriptions
+    * The creation of one or more symbolic links to existing style/image/branding
+      directories
 - The app shall be run by the RDR administrator linux/unix user (not by a web
   user such as the dataset owner/manager).
 - It shows file sizes of hyperlinked (downloadable) files.
