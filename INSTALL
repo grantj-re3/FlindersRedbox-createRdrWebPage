@@ -15,11 +15,25 @@ system, consider using Ruby Version Manager at https://rvm.io.
 
 2.1 ASSUMPTIONS
 
- - That you have a basic understanding of Linux/Unix, Ruby.
+ - That you have a basic understanding of Linux/Unix, Ruby, HTML and your
+   web server.
  - That you are using a Linux, Unix or Unix-like environment similar to that
-   described under APPLICATION ENVIRONMENT.
+   described under APPLICATION ENVIRONMENT or you can translate these
+   instructions into equivalent commands for your operating system.
  - That the user who runs this program has permission to write files (static web
    pages) into the Apache (or other web server) web root directory.
+ - All dataset web-pages will use the same html-template and hence have the same
+   branding.
+ - Dataset directories shall be pre-populated with all dataset & related
+   files BEFORE this program is run.
+ - This program shall ignore the following within the dataset/current dir:
+   * directories
+   * symbolic links to directories
+   * .htaccess files
+   * HTML_OUT_FNAME (normally index.html or index.htm)
+ - It is expected (but not required) that CSS, images & other style files
+   will reside in a single directory & that the style directory will be a
+   sibling (ie. share the same parent directory) of the dataset directories).
 
 
 2.2 INSTRUCTIONS

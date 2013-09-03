@@ -15,30 +15,9 @@
 # - Allow user to enter an optional description of each file in the current dir
 # - Use an html template (eg. with branding/css) to:
 #   * display the above page title & page description
-#   * display the above file links with file descriptions
+#   * display the above file links (& file sizes) with file descriptions
 # - Write the html to a file (eg. index.html)
-# - Add symlink to an existing style/image/branding dir
-#
-# Assumptions:
-# - All dataset web-pages will use the same html-template & hence have the same
-#   branding.
-# - It is expected (but not required) that CSS, images & other style files
-#   will reside in a single directory & that directory will be a sibling
-#   (ie. share the same parent directory) as dataset directories).
-# - Dataset directories shall be pre-populated with all dataset & related
-#   files BEFORE this program is run.
-# - This program shall ignore the following within the dataset/current dir:
-#   * directories
-#   * symbolic links to directories
-#   * .htaccess files
-#   * HTML_OUT_FNAME (normally index.html or index.htm)
-#
-# Environment:
-# Developed and tested in the following environment:
-# - Red Hat Enterprise Linux Server release 6.4 (Santiago)
-# - Kernel 2.6.32-358.6.2.el6.x86_64 #1 SMP
-# - Ruby 1.8.7 (2011-06-30 patchlevel 352) [x86_64-linux]
-# - Apache httpd 2.2.15
+# - Add symlinks to existing style/image/branding dirs
 #
 ##############################################################################
 require 'cgi'
@@ -283,7 +262,7 @@ def get_user_input(properties)
         line = gets.chomp.strip
       end
       prop[:text].chomp!
-      puts "INPUT WAS:  #{prop[:text]}"
+      #puts "INPUT WAS:  #{prop[:text]}"
     end while prop[:is_mandatory] && prop[:text] == ''
   }
   properties
