@@ -1,0 +1,19 @@
+
+FlindersRedbox-createRdrWebPage
+===============================
+
+createRdrWebPage-demo-v1.0
+--------------------------
+Initial version. Allows a web administrator to quickly create a
+static web page from the command line. The web page can include
+page title, page description and a description of every file
+within the web directory (with a corresponding hyperlink).
+
+createRdrWebPage-demo-v1.0.1
+----------------------------
+- Replaced IGNORE_FILE_LIST with the regex list, IGNORE_FILE_REGEX_LIST.
+  (This improvement in flexibility made it easier to use with STEN. See
+  https://github.com/grantj-re3/SimpleTemplateENgine-Sten.)
+- Updated to detect broken symlinks.
+- Updated doco.
+
