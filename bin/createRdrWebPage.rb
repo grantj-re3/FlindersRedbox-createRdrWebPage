@@ -66,15 +66,14 @@ KB_SIZE = 1000
 MB_SIZE = KB_SIZE * KB_SIZE
 GB_SIZE = KB_SIZE * KB_SIZE * KB_SIZE
 
-# When this app prompts for file descriptions, it shall ignore filenames
-# given in this list. This is an array of filename strings. Since we
-# invoke the include() method on this array, it does not support strings
-# containing either file wildcards or regular expressions.
-IGNORE_FILE_LIST = [
-  ".",			# Unix: current directory
-  "..",			# Unix: parent directory
-  ".htaccess",		# Apache directory-level configuration file
-  HTML_OUT_FNAME	# The web page being created by this app
+# This is an array of regular expressions. When this app prompts for
+# file descriptions, it shall ignore filenames which match the regular
+# expressions given below.
+IGNORE_FILE_REGEX_LIST = [
+  # No need to list the destination file HTML_OUT_FNAME (as this
+  # app quits if it exists)
+  /^\.htaccess$/,
+  /\.html$/,
 ]
 
 ##############################################################################
@@ -89,7 +88,17 @@ class File
       exit 1
     end
   end
-end  # class File
+
+  # Return true if filename is a symlink & the link is broken.
+  def self.broken_symlink?(filename)
+    begin
+      File.stat(filename).symlink?
+    rescue Exception => ex
+      return true
+    end
+    false
+  end
+end
 
 ##############################################################################
 # Extend the Ingeter built-in class
@@ -121,8 +130,15 @@ def check_for_web_page_overwrite
       Program now ending.
 
     OVERWRITE_EOM
-    exit(1)
+    exit 2
   end
+end
+
+##############################################################################
+# Display message then exit
+def message_exit(msg)
+  puts msg
+  exit 3
 end
 
 ##############################################################################
@@ -187,17 +203,18 @@ end
 # Create a hash (initially empty) where each value is a description of
 # the corresponding file within the current dir. That is:
 #   file_descriptions_by_ext_by_fname[FILE_EXT][FILENAME] = DESC OF FILE
+# Eg.
+#   file_descriptions_by_ext_by_fname['.txt']['readme1.txt'] = "description..."
 def get_file_descriptions_by_ext_by_fname
-  # A hash of hashes. eg.
-  # file_descriptions_by_ext_by_fname['.txt']['readme1.txt'] = "description..."
   file_descriptions_by_ext_by_fname = {}
   Dir.foreach(".") {|fname|
+    message_exit("Error: '#{fname}' seems to be a broken symbolic link!\nPlease fix and then run this program again") if File.broken_symlink?(fname)
     next if File.directory?(fname)	# Ignore any subdirectories
-    unless IGNORE_FILE_LIST.include?(fname)
-      ext = File.extname(fname)
-      file_descriptions_by_ext_by_fname[ext] = {} unless file_descriptions_by_ext_by_fname[ext]
-      file_descriptions_by_ext_by_fname[ext][fname] = ""	# Empty description
-    end
+    next if IGNORE_FILE_REGEX_LIST.inject(false){|skip,regex| skip ||= fname =~ regex}
+
+    ext = File.extname(fname)
+    file_descriptions_by_ext_by_fname[ext] = {} unless file_descriptions_by_ext_by_fname[ext]
+    file_descriptions_by_ext_by_fname[ext][fname] = ""	# Empty description
   }
   file_descriptions_by_ext_by_fname
 end

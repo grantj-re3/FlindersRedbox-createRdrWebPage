@@ -65,3 +65,13 @@ Features
   input text (which may be ultimately displayed as one or more
   automatically-wrapped lines of html).
 
+Notes
+-----
+ - All dataset web-pages will use the same html-template and hence have the same
+   branding integrated into the static web page which is created. This means
+   that changing the branding on each static page at a later time may be a long
+   and tedious task if you have created many web pages using this program.
+   Hence, if you wish to cleanly separate the page content from the branding,
+   consider using an HTML templating system such as STEN in conjunction with
+   this program. See https://github.com/grantj-re3/SimpleTemplateENgine-Sten.
+

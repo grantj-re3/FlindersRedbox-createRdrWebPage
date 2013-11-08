@@ -22,15 +22,20 @@ system, consider using Ruby Version Manager at https://rvm.io.
    instructions into equivalent commands for your operating system.
  - That the user who runs this program has permission to write files (static web
    pages) into the Apache (or other web server) web root directory.
- - All dataset web-pages will use the same html-template and hence have the same
-   branding.
+ - All dataset web pages will use the same html-template and hence have the same
+   branding integrated into the static web page which is created. This means
+   that changing the branding on each static page at a later time may be a long
+   and tedious task if you have created many web pages using this program.
+   Hence, if you wish to cleanly separate the page content from the branding,
+   consider using an HTML templating system such as STEN in conjunction with
+   this program. See https://github.com/grantj-re3/SimpleTemplateENgine-Sten.
  - Dataset directories shall be pre-populated with all dataset & related
    files BEFORE this program is run.
  - This program shall ignore the following within the dataset/current dir:
    * directories
    * symbolic links to directories
-   * .htaccess files
-   * HTML_OUT_FNAME (normally index.html or index.htm)
+   * .htaccess files and other filenames which shall be ignored because
+     they match the regular expressions given in IGNORE_FILE_REGEX_LIST
  - It is expected (but not required) that CSS, images & other style files
    will reside in a single directory & that the style directory will be a
    sibling (ie. share the same parent directory) of the dataset directories).
