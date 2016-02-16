@@ -75,3 +75,11 @@ Notes
    consider using an HTML templating system such as STEN in conjunction with
    this program. See https://github.com/grantj-re3/SimpleTemplateENgine-Sten.
 
+Utilities
+---------
+- _notifyVoidLink.sh_: In a Flinders web page created by the above script,
+  there is typically a 'More Information' link. The workflow requires it be
+  populated during the final step, however this step is easily forgotten. The
+  purpose of this program is to email interested parties that web pages
+  exist for which the 'More Information' link is not properly configured.
+

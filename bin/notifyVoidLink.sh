@@ -17,7 +17,7 @@
 # - update the RDR web page with the newly generated handle URL in the
 #   'More Information' link
 #
-# The final step is easily forgetten particularly since the ReDBox steps
+# The final step is easily forgotten particularly since the ReDBox steps
 # and RDR steps are performed by two different groups. The purpose of
 # this program is to notify the groups that web pages exist for which
 # the 'More Information' link is not properly configured.
